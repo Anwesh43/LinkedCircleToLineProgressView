@@ -26,11 +26,11 @@ fun Canvas.drawLCTPNode(i : Int, scale : Float, paint : Paint) {
     paint.strokeWidth = Math.min(w, h) / 60
     paint.strokeCap = Paint.Cap.ROUND
     save()
-    translate(i * gap, h/2 + h/10 * sc2)
+    translate(i * gap + gap / 2, h/2 + h/10 * sc2)
     val path : Path = Path()
     for (j in 0..360) {
         val x : Float = (gap / 2) * Math.cos(j * Math.PI / 180).toFloat()
-        val y : Float = (gap / 2) * sc1 * Math.sin(j * Math.PI/180).toFloat()
+        val y : Float = (gap / 2) * (1 - sc1) * Math.sin(j * Math.PI/180).toFloat()
         if (j == 0) {
             path.moveTo(x, y)
         } else {
@@ -191,7 +191,7 @@ class LCTPView(ctx : Context) : View(ctx) {
 
         fun handleTap() {
             lctp.startUpdating {
-                animator.stop()
+                animator.start()
             }
         }
     }
