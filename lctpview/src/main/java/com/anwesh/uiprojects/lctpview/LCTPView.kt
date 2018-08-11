@@ -9,6 +9,7 @@ import android.view.MotionEvent
 import android.graphics.Canvas
 import android.graphics.Paint
 import android.content.Context
+import android.graphics.Color
 import android.graphics.Path
 
 val nodes : Int = 5
@@ -19,6 +20,10 @@ fun Canvas.drawLCTPNode(i : Int, scale : Float, paint : Paint) {
     val gap : Float = w / nodes
     val sc1 : Float = Math.min(scale, 0.5f) * 2
     val sc2 : Float = Math.min(0.5f, Math.max(scale - 0.5f, 0f)) * 2
+    paint.style = Paint.Style.STROKE
+    paint.color = Color.parseColor("#43A047")
+    paint.strokeWidth = Math.min(w, h) / 60
+    paint.strokeCap = Paint.Cap.ROUND
     save()
     translate(i * gap, h/2 + h/10 * sc2)
     val path : Path = Path()
