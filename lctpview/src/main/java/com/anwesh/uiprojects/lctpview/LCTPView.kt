@@ -172,4 +172,25 @@ class LCTPView(ctx : Context) : View(ctx) {
             curr.startUpdating(cb)
         }
     }
+
+    data class Renderer(var view : LCTPView) {
+        private val animator : Animator = Animator(view)
+        private var lctp : LinkedCTP = LinkedCTP(0)
+
+        fun render(canvas : Canvas, paint : Paint) {
+            canvas.drawColor(Color.parseColor("#BDBDBD"))
+            lctp.draw(canvas, paint)
+            animator.animate {
+                lctp.update {i, scl ->
+                    animator.stop()
+                }
+            }
+        }
+
+        fun handleTap() {
+            lctp.startUpdating {
+                animator.stop()
+            }
+        }
+    }
 }
