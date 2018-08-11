@@ -4,6 +4,7 @@ package com.anwesh.uiprojects.lctpview
  * Created by anweshmishra on 12/08/18.
  */
 
+import android.app.Activity
 import android.view.View
 import android.view.MotionEvent
 import android.graphics.Canvas
@@ -192,6 +193,15 @@ class LCTPView(ctx : Context) : View(ctx) {
             lctp.startUpdating {
                 animator.stop()
             }
+        }
+    }
+
+    companion object {
+
+        fun create(activity : Activity) : LCTPView {
+            val view : LCTPView = LCTPView(activity)
+            activity.setContentView(view)
+            return view
         }
     }
 }
