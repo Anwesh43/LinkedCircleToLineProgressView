@@ -45,6 +45,11 @@ class LCTPView(ctx : Context) : View(ctx) {
 
     private val paint : Paint = Paint(Paint.ANTI_ALIAS_FLAG)
     private val renderer : Renderer = Renderer(this)
+    var animationListener : AnimationCompleteListener? = null
+
+    fun addAnimationListener(onComplete : (Int) -> Unit, onReset : (Int) -> Unit) {
+        animationListener = AnimationCompleteListener(onComplete, onReset)
+    }
 
     override fun onDraw(canvas : Canvas) {
         renderer.render(canvas, paint)
@@ -185,6 +190,10 @@ class LCTPView(ctx : Context) : View(ctx) {
             animator.animate {
                 lctp.update {i, scl ->
                     animator.stop()
+                    when(scl) {
+                        1f -> view.animationListener?.onComplete?.invoke(i)
+                        0f -> view.animationListener?.onReset?.invoke(i)
+                    }
                 }
             }
         }
@@ -204,4 +213,6 @@ class LCTPView(ctx : Context) : View(ctx) {
             return view
         }
     }
+
+    data class AnimationCompleteListener(var onComplete : (Int) -> Unit, var onReset : (Int) -> Unit)
 }
