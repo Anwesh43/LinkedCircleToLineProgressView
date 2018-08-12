@@ -152,13 +152,13 @@ class LCTPView(ctx : Context) : View(ctx) {
     }
 
     data class LinkedCTP(var i : Int) {
-
-        private var curr : LCTPNode = LCTPNode(0)
+        private var root : LCTPNode = LCTPNode(0)
+        private var curr : LCTPNode = root
 
         private var dir : Int = 1
 
         fun draw(canvas : Canvas, paint : Paint) {
-            curr.draw(canvas, paint)
+            root.draw(canvas, paint)
         }
 
         fun update(cb : (Int, Float) -> Unit) {
